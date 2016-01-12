@@ -4,6 +4,7 @@
   "description": "real time polling app",
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/nodemon/bin/nodemon.js index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/roseak/crowdsource/issues"
   },
-  "homepage": "https://github.com/roseak/crowdsource#readme"
+  "homepage": "https://github.com/roseak/crowdsource#readme",
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "nodemon": "^1.8.1"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "jquery": "^2.2.0"
+  }
 }
