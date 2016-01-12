@@ -1,0 +1,19 @@
+{
+  "name": "crowdsource",
+  "version": "1.0.0",
+  "description": "real time polling app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roseak/crowdsource.git"
+  },
+  "author": "Rose Kohn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roseak/crowdsource/issues"
+  },
+  "homepage": "https://github.com/roseak/crowdsource#readme"
+}
