@@ -1,21 +1,38 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>crowdsource</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/normalize.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
   </head>
   <body>
-
-    <h1>crowdsource</h1>
-    <section class="new-title">
-      <form>
-        <input type="text" placeholder="title" class="title">
-        <input type="submit">
-      </form>
-    </section>
+    <div class="container">
+      <h1 class="center">crowdsource</h1>
+      <div class="row center">
+          <form id="new-poll" method="post" action="/">
+            <div id="new-form-input">
+              <div>
+                <input type="text" placeholder="title" class="title">
+              </div>
+              <div>
+                <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
+              </div>
+              <div>
+                <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
+              </div>
+            </div>
+              <input type="button" class="btn" value="Add another variable" onClick="addInput('new-form-input')">
+            <input type="submit" class="btn" id="submit-poll">
+          </form>
+      </div>
+    </div>
 
     <script src="/jquery.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/application.js"></script>
-
+    <script src="/client.js"></script>
   </body>
 </html>
