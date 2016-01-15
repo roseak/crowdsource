@@ -23,7 +23,7 @@ app.post('/', function(req, res){
   urlHash(poll);
   var id = poll.id;
   polls[id] = poll;
-  res.send("<div><a href='/" + poll.adminUrl + "/" + poll.id + "'>Admin URL</a><br><a href='/poll/" + poll.id + "'>Poll URL</a></div>");
+  res.render('link-show', { poll: poll });
 });
 
 app.get('/new', function(req, res){
