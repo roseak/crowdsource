@@ -19,7 +19,7 @@
             <h5>Choose from the options below:</h5>
             <ul>
             <% poll.responses.forEach(function(response) { %>
-              <li><button class="btn indigo poll-buttons"><%= response %></button></li>
+              <li id="choices"><button class="btn indigo poll-buttons"><%= response %></button></li>
             <% }); %>
             </ul>
           </div>

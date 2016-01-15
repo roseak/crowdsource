@@ -26,6 +26,10 @@ app.post('/', function(req, res){
   res.render('link-show', { poll: poll });
 });
 
+// app.get('/*', function(req, res){
+//   poll = req.
+// })
+
 app.get('/new', function(req, res){
   res.sendFile(path.join(__dirname, '/public/new.html'));
 });
@@ -48,11 +52,23 @@ var server = http.createServer(app)
 
 const io = socketIo(server);
 
+var votes = {};
+
 function urlHash(poll) {
   poll.id = crypto.createHash('md5').update(poll.question + Date.now()).digest('hex');
   poll.adminUrl = crypto.createHash('md5').update(poll.responses[0] + Date.now()).digest('hex');
   return poll;
 }
+io.on('connection', function(socket) {
+  socket.on('message', function (channel, message) {
+    console.log(channel, message);
+    if (channel === 'voteCast') {
+      votes[socket.id] = message;
+      console.log(votes);
+      console.log(socket.id);
+    }
+  });
+})
 
 
 module.exports = server;
