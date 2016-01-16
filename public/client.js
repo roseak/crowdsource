@@ -22,5 +22,4 @@ socket.on('voteCount', function(votes) {
     result += choice + ": " + votes[choice] + " ";
   }
   currentTally.innerText = "Vote Results: " + result;
-  console.log(votes);
 });

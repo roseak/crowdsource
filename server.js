@@ -89,9 +89,11 @@ function urlHash(poll) {
 io.on('connection', function(socket) {
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast' + message.id) {
+      socket.join(message.id);
       votes[socket.id] = message.vote;
       var poll = polls[message.id];
       socket.emit('voteCount', countVotes(votes, poll))
+      socket.broadcast.to(message.id).emit('voteCount', countVotes(votes, poll))
     }
   });
 })
