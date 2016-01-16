@@ -65,7 +65,9 @@ io.on('connection', function(socket) {
     if (channel === 'voteCast') {
       votes[socket.id] = message;
       console.log(votes);
-      console.log(socket.id);
+    }
+    if (channel === 'pollId') {
+      console.log(message);
     }
   });
 })
