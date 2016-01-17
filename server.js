@@ -26,16 +26,11 @@ app.post('/', function(req, res){
   res.render('link-show', { poll: poll });
 });
 
-// app.get('/*', function(req, res){
-//   poll = req.
-// })
-
-app.get('/new', function(req, res){
-  res.sendFile(path.join(__dirname, '/public/new.html'));
-});
-
-app.get('/admin/*', function(req, res){
-  res.sendFile(path.join(__dirname, '/public/admin.html'));
+app.get('/admin/:id', function(req, res){
+  var adminId = req.params.id;
+  var pollObj = hash_filter(polls, function(poll) { return poll.adminUrl === adminId })
+  poll = pollObj[Object.keys(pollObj)[0]]
+  res.render('admin', { poll: poll });
 });
 
 app.get('/poll/:id', function(req, res){
