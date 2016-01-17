@@ -22,7 +22,9 @@
               <li id="choices"><button id="<%= poll.id %>" class="btn indigo poll-buttons"><%= response %></button></li>
             <% }); %>
             </ul>
-            <div id="current-tally"></div>
+            <% if(poll.visible === "on") { %>
+              <div id="current-tally"></div>
+            <% } %>
             <div id="current-choice"></div>
           </div>
         </div>
