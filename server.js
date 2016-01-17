@@ -91,6 +91,9 @@ io.on('connection', function(socket) {
       socket.emit('currentChoice', message.vote);
       io.sockets.emit('voteCount' + message.id, countVotes(votes, poll));
     }
+    if (channel === 'endPoll' + message) {
+      io.sockets.emit('pollOver' + message);
+    }
   });
 })
 

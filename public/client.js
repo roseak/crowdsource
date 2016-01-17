@@ -16,6 +16,19 @@ for (var i = 0; i < buttons.length; i++) {
   })
 }
 
+var endButton = document.getElementById('close-button');
+var pollClosed = document.getElementById('close-poll');
+
+if(endButton) {
+  endButton.addEventListener('click', function() {
+    socket.send('endPoll' + pollId, pollId);
+  });
+}
+
+socket.on('pollOver' + pollId, function() {
+  pollClosed.innerText = "Poll is now closed!";
+});
+
 var currentTally = document.getElementById('current-tally');
 
 socket.on('voteCount' + pollId, function(votes) {
