@@ -23,3 +23,9 @@ socket.on('voteCount', function(votes) {
   }
   currentTally.innerText = "Vote Results: " + result;
 });
+
+var currentChoice = document.getElementById('current-choice');
+
+socket.on('currentChoice', function(message) {
+  currentChoice.innerText = "Your current vote is for " + message;
+});
