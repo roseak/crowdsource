@@ -68,7 +68,6 @@ var hash_filter = function(hash, test_function) {
 }
 
 function countVotes(votes, poll) {
-  // var poll = polls[votes['poll']];
   poll.voteCount = {};
   for (var i = 0; i < poll.responses.length; i++) {
     poll.voteCount[poll.responses[i].toUpperCase()] = 0;
@@ -92,8 +91,8 @@ io.on('connection', function(socket) {
       socket.join(message.id);
       votes[socket.id] = message.vote;
       var poll = polls[message.id];
-      socket.emit('voteCount', countVotes(votes, poll))
-      socket.broadcast.to(message.id).emit('voteCount', countVotes(votes, poll))
+      socket.emit('currentChoice', message.vote);
+      io.in(message.id).emit('voteCount', countVotes(votes, poll))
     }
   });
 })
