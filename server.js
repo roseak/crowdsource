@@ -26,16 +26,18 @@ app.post('/', function(req, res){
   res.render('link-show', { poll: poll });
 });
 
-app.get('/admin/:id', function(req, res){
-  var adminId = req.params.id;
-  var pollObj = hash_filter(polls, function(poll) { return poll.adminUrl === adminId })
-  poll = pollObj[Object.keys(pollObj)[0]]
-  res.render('admin', { poll: poll });
-});
-
 app.get('/poll/:id', function(req, res){
   var poll = polls[req.params.id];
   res.render('user-poll', { poll: poll });
+});
+
+app.get('/:adminUrl/:id', function(req, res){
+  var poll = polls[req.params.id];
+  if (poll.adminUrl === req.params.adminUrl) {
+    res.render('admin', { poll: poll });
+  } else {
+    res.send("404");
+  }
 });
 
 var port = process.env.PORT || 3000;
@@ -83,14 +85,12 @@ function urlHash(poll) {
 io.on('connection', function(socket) {
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast' + message.id) {
-      socket.join(message.id);
       votes[socket.id] = message.vote;
       var poll = polls[message.id];
       socket.emit('currentChoice', message.vote);
-      io.in(message.id).emit('voteCount', countVotes(votes, poll))
+      io.sockets.emit('voteCount' + message.id, countVotes(votes, poll));
     }
   });
 })
-
 
 module.exports = server;

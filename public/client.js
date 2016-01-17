@@ -1,4 +1,6 @@
 var socket = io();
+var adminSocket = io('/admin/:id');
+var pollId = window.location.pathname.split('/')[2];
 
 function addInput(element) {
   var newInput = document.createElement('div');
@@ -16,7 +18,7 @@ for (var i = 0; i < buttons.length; i++) {
 
 var currentTally = document.getElementById('current-tally');
 
-socket.on('voteCount', function(votes) {
+socket.on('voteCount' + pollId, function(votes) {
   var result = "";
   for (var choice in votes) {
     result += choice + ": " + votes[choice] + " ";
