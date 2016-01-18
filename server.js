@@ -5,11 +5,9 @@ const app = express();
 const path = require('path');
 const crypto = require('crypto');
 const moment = require('moment');
-
 const bodyParser = require('body-parser');
 
 app.set('view engine', 'ejs');
-var polls = {}
 
 app.use(bodyParser.urlencoded({ extended:true }));
 
@@ -50,6 +48,7 @@ var server = http.createServer(app)
 
 const io = socketIo(server);
 
+var polls = {}
 var votes = {};
 
 var hash_filter = function(hash, test_function) {
@@ -88,16 +87,27 @@ io.on('connection', function(socket) {
     if (channel === 'voteCast' + message.id) {
       var poll = polls[message.id];
 
+      if (poll.endTime) {
+        var milTime = moment(poll.endTime).format('x');
+        var timeDone = milTime - moment().format('x');
+        setTimeout(function(){
+          poll.status = "closed";
+          io.sockets.emit('pollOver' + poll.id)
+        }, timeDone);
+      }
+
       if (moment() >= moment(poll.endTime) || poll.status === "closed") {
         poll.status = "closed";
         io.sockets.emit('pollOver' + message.id);
       }
+
       if (poll.status === "on") {
         votes[socket.id] = message.vote;
         socket.emit('currentChoice', message.vote);
         io.sockets.emit('voteCount' + message.id, countVotes(votes, poll));
       }
     }
+    
     if (channel === 'endPoll' + message) {
       var poll = polls[message];
       poll.status = "closed";
@@ -105,5 +115,6 @@ io.on('connection', function(socket) {
     }
   });
 })
+
 
 module.exports = server;
