@@ -107,7 +107,7 @@ io.on('connection', function(socket) {
         io.sockets.emit('voteCount' + message.id, countVotes(votes, poll));
       }
     }
-    
+
     if (channel === 'endPoll' + message) {
       var poll = polls[message];
       poll.status = "closed";
