@@ -6,41 +6,39 @@
   <body>
     <% include ./partials/navbar %>
     <div class="container">
-      <h1 class="center">crowdsource</h1>
+      <h4 class="center">create a new poll</h4>
       <div class="row">
         <div class="col m8 offset-m2">
           <div class="row center">
-              <form id="new-poll" method="post" action="/">
-                <div id="new-form-input">
-                  <div>
-                    <input type="text" placeholder="question" name="poll[question]">
-                  </div>
-                  <div>
-                    <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
-                  </div>
-                  <div>
-                    <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
-                  </div>
-                  <br>
+            <form id="new-poll" method="post" action="/">
+              <div id="new-form-input">
+                <div>
+                  <input type="text" placeholder="question" name="poll[question]">
                 </div>
                 <div>
-                <div>
-                  <input type="text" placeholder="poll end time formatted as below" class="poll-response" name="poll[endTime]"><br>
-                  <h6>(YYYY-MM-DD HH:mm)</h6><br>
+                  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
                 </div>
                 <div>
-                  <input type="hidden" value="on" name="poll[status]">
+                  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
                 </div>
-                <div>
-                  <input type="checkbox" id="results-show" name="poll[visible]">
-                  <label for="results-show">Show the poll results with the poll takers</label>
-                </div>
-                <br>
-                <input type="button" class="btn" value="Add another variable" onClick="addInput('new-form-input')">
-                <input type="submit" class="btn" id="submit-poll">
-              </form>
-            </div>
+              </div>
+              <input type="button" class="btn" value="Add another variable" onClick="addInput('new-form-input')">
+              <br><br>
+              <div>
+                <input type="text" placeholder="poll end time formatted as below" class="poll-response" name="poll[endTime]"><br>
+              </div>
+              <div>
+                <input type="hidden" value="on" name="poll[status]">
+              </div>
+              <div>
+                <input type="checkbox" id="results-show" name="poll[visible]">
+                <label for="results-show">Show the poll results with the poll takers</label>
+              </div>
+              <br>
+              <input type="submit" class="btn" id="submit-poll">
+            </form>
           </div>
+        </div>
       </div>
     </div>
     <% include ./partials/scripts %>
