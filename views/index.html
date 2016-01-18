@@ -26,12 +26,21 @@
                   <div>
                     <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
                   </div>
+                  <br>
                 </div>
                 <div>
+                <div>
+                  <input type="text" placeholder="poll end time formatted as below" class="poll-response" name="poll[endTime]"><br>
+                  <h6>(YYYY-MM-DD HH:mm)</h6><br>
+                </div>
+                <div>
+                  <input type="hidden" value="on" name="poll[status]">
+                </div>
                 <div>
                   <input type="checkbox" id="results-show" name="poll[visible]">
                   <label for="results-show">Show the poll results with the poll takers</label>
                 </div>
+                <br>
                 <input type="button" class="btn" value="Add another variable" onClick="addInput('new-form-input')">
                 <input type="submit" class="btn" id="submit-poll">
               </form>

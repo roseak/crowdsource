@@ -4,11 +4,10 @@ const socketIo = require('socket.io');
 const app = express();
 const path = require('path');
 const crypto = require('crypto');
-
+const moment = require('moment');
 const bodyParser = require('body-parser');
 
 app.set('view engine', 'ejs');
-var polls = {}
 
 app.use(bodyParser.urlencoded({ extended:true }));
 
@@ -28,7 +27,6 @@ app.post('/', function(req, res){
 
 app.get('/poll/:id', function(req, res){
   var poll = polls[req.params.id];
-  console.log(poll)
   res.render('user-poll', { poll: poll });
 });
 
@@ -50,6 +48,7 @@ var server = http.createServer(app)
 
 const io = socketIo(server);
 
+var polls = {}
 var votes = {};
 
 var hash_filter = function(hash, test_function) {
@@ -86,15 +85,36 @@ function urlHash(poll) {
 io.on('connection', function(socket) {
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast' + message.id) {
-      votes[socket.id] = message.vote;
       var poll = polls[message.id];
-      socket.emit('currentChoice', message.vote);
-      io.sockets.emit('voteCount' + message.id, countVotes(votes, poll));
+
+      if (poll.endTime) {
+        var milTime = moment(poll.endTime).format('x');
+        var timeDone = milTime - moment().format('x');
+        setTimeout(function(){
+          poll.status = "closed";
+          io.sockets.emit('pollOver' + poll.id)
+        }, timeDone);
+      }
+
+      if (moment() >= moment(poll.endTime) || poll.status === "closed") {
+        poll.status = "closed";
+        io.sockets.emit('pollOver' + message.id);
+      }
+
+      if (poll.status === "on") {
+        votes[socket.id] = message.vote;
+        socket.emit('currentChoice', message.vote);
+        io.sockets.emit('voteCount' + message.id, countVotes(votes, poll));
+      }
     }
+    
     if (channel === 'endPoll' + message) {
+      var poll = polls[message];
+      poll.status = "closed";
       io.sockets.emit('pollOver' + message);
     }
   });
 })
+
 
 module.exports = server;
