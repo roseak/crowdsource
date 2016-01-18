@@ -27,6 +27,7 @@
             <% } else { %>
               <div id="no-votes">There are currently no votes for your survey.  Check back soon!</div>
             <% } %>
+            <div><h5><a href='/poll/<%= poll.id %>'>share your poll with more friends</a></h5></div>
             <% if( poll.status === "on" ) { %>
               <div id="close-poll"><button id="close-button" class="btn indigo">End Poll Now</button></div>
             <% } %>
