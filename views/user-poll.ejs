@@ -17,17 +17,21 @@
           <div class="row center">
             <h3><%= poll.question %></h3><br>
             <div id="close-poll">
-              <h5>Choose from the options below:</h5>
-              <ul>
-              <% poll.responses.forEach(function(response) { %>
-                <li id="choices"><button id="<%= poll.id %>" class="btn indigo poll-buttons"><%= response %></button></li>
-              <% }); %>
-              </ul>
-              <div id="current-choice"></div>
-            </div>
-            <% if(poll.visible === "on") { %>
-              <div id="current-tally"></div>
-            <% } %>
+              <% if(poll.status === "on") { %>
+                <h5>Choose from the options below:</h5>
+                <ul>
+                <% poll.responses.forEach(function(response) { %>
+                  <li id="choices"><button id="<%= poll.id %>" class="btn indigo poll-buttons"><%= response %></button></li>
+                <% }); %>
+                </ul>
+                <div id="current-choice"></div>
+              <% } else { %>
+                <div>Sorry, this poll is now closed.</div>
+              <% } %>
+              </div>
+              <% if(poll.visible === "on") { %>
+                <div id="current-tally"></div>
+              <% } %>
           </div>
         </div>
       </div>
