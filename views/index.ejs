@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/navbar %>
+    <div class="container">
+      <h4 class="center">create a new poll</h4>
+      <div class="row">
+        <div class="col m8 offset-m2">
+          <div class="row center">
+            <form id="new-poll" method="post" action="/">
+              <div id="new-form-input">
+                <div>
+                  <input type="text" placeholder="question" name="poll[question]">
+                </div>
+                <div>
+                  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
+                </div>
+                <div>
+                  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]">
+                </div>
+              </div>
+              <input type="button" class="btn indigo" value="Add another option" onClick="addInput('new-form-input')">
+              <br><br>
+              <div>
+                <input type="datetime-local" placeholder="poll end time formatted as below" class="poll-end-entry" name="poll[endTime]">
+                <label for="poll-end-entry">poll end time (optional)</label>
+                <br><br>
+              </div>
+              <div>
+                <input type="hidden" value="on" name="poll[status]">
+              </div>
+              <div>
+                <input type="checkbox" id="results-show" name="poll[visible]">
+                <label for="results-show">show the poll results with the poll takers</label>
+              </div>
+              <br>
+              <input type="submit" class="btn indigo" id="submit-poll">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% include ./partials/scripts %>
+  </body>
+</html>

@@ -10,8 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
   </head>
   <body>
+    <% include ./partials/navbar %>
     <div class="container">
-      <h4 class="center">crowdsource</h4>
+      <br>
       <div class="row">
         <div class="col m8 offset-m2">
           <div class="row center">
@@ -36,9 +37,6 @@
         </div>
       </div>
     </div>
-
-    <script src="/jquery.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/client.js"></script>
+    <% include ./partials/scripts %>
   </body>
 </html>

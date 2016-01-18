@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended:true }));
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, '/views/index.html'));
+  res.render('index');
 });
 
 app.post('/', function(req, res){
@@ -73,7 +73,8 @@ function countVotes(votes, poll) {
     poll.voteCount[votes[vote]] += 1;
   }
 
-  return hash_filter(poll.voteCount, function(item){ return !isNaN(item) });
+  poll.voteCount = hash_filter(poll.voteCount, function(item){ return !isNaN(item) });
+  return poll.voteCount
 }
 
 function urlHash(poll) {
@@ -86,7 +87,6 @@ io.on('connection', function(socket) {
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast' + message.id) {
       var poll = polls[message.id];
-
       if (poll.endTime) {
         var milTime = moment(poll.endTime).format('x');
         var timeDone = milTime - moment().format('x');
