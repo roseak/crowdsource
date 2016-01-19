@@ -20,25 +20,7 @@
               <h5>poll will end: <%= poll.endTime %></h5><br>
             <% } %>
             <% if( poll.voteTally ) { %>
-              <div id="current-tally">
-                <h5>Vote Results</h5><br><br>
-                <table class="highlight">
-                  <thead>
-                    <tr>
-                      <th>Choice</th>
-                      <th>Votes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% for (var vote in poll.voteTally) { %>
-                      <tr>
-                        <td> <%= vote %></td>
-                        <td><%= poll.voteTally[vote] %></td>
-                      </tr>
-                    <% }; %>
-                  </tbody>
-                </table>
-              </div>
+              <% include ./partials/vote-results %>
             <% } else { %>
               <div id="current-tally">There are currently no votes for your survey.  Check back soon!</div>
             <% } %>
