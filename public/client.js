@@ -32,9 +32,10 @@ socket.on('pollOver' + pollId, function() {
 socket.on('voteCount' + pollId, function(votes) {
   var result = "";
   for (var choice in votes) {
-    result += choice + ": " + votes[choice] + " ";
+    result += "<tr><td>" + choice + "</td><td>" + votes[choice] + "</td></tr>";
   }
-  currentTally.innerText = "Vote Results: " + result;
+  currentTally.innerHTML = "<h5>Vote Results</h5> \n\n<table class='highlight'><thead>"
+    + "<tr><th>Choice</th><th>Votes</th></tr></thead><tbody>" + result + "</tbody></table>";
 });
 
 socket.on('currentChoice', function(message) {
