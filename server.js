@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 const countVotes = require('./lib/count-votes');
 const urlHash = require('./lib/url-hash');
-const endConfigure = require('./lib/end-configure');
 
 app.locals.polls = {};
 
@@ -59,7 +58,13 @@ io.on('connection', function(socket) {
       var poll = app.locals.polls[message.id];
 
       if (poll.endTime) {
-        endConfigure(poll);
+        var milTime = moment(poll.endTime).format('x');
+        var timeDone = milTime - moment().format('x');
+          poll.displayTime = moment(poll.endTime).fromNow();
+        setTimeout(function(){
+          poll.status = "closed";
+          io.sockets.emit('pollOver' + poll.id)
+        }, timeDone);
       }
 
       if (moment() >= moment(poll.endTime) || poll.status === "closed") {
