@@ -81,4 +81,39 @@ describe('Server', function() {
       });
     });
   });
+
+  describe('GET /poll/:id', function(done) {
+    beforeEach(function() {
+      app.locals.polls.pizza = fixtures.validPoll;
+    });
+
+    it('should return 200', function(done) {
+      this.request.get('/poll/pizza', function(error, response) {
+        if (error) {done(error); }
+        assert.equal(response.statusCode, 200);
+        done();
+      });
+    });
+
+    it('should show the poll question', function(done) {
+      var poll = app.locals.polls.pizza;
+
+      this.request.get('/poll/pizza', function(error, response) {
+        if (error) { done(error); }
+        assert(response.body.includes(poll.question), `"${response.body} does not include ${poll.question}"`);
+        done();
+      });
+    });
+
+    it('should show the poll options', function(done) {
+      var poll = app.locals.polls.pizza;
+
+      this.request.get('/poll/pizza', function(error, response) {
+        if (error) { done(error); }
+        assert(response.body.includes(poll.responses[1]),
+              `"${response.body} does not include ${poll.responses[1]}"`);
+        done();
+      });
+    });
+  });
 });
