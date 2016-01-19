@@ -84,10 +84,4 @@ io.on('connection', function(socket) {
   });
 });
 
-if (!module.parent) {
-  app.listen(app.get('port'), () => {
-    console.log("We're listening...");
-  });
-}
-
 module.exports = app;
