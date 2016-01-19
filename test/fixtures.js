@@ -3,7 +3,7 @@ exports.validPoll = {
   responses: ['obviously', 'duh'],
   'id': 'test',
   adminUrl: 'adminUrl',
-  voteCount: {},
+  votes: {},
   status: 'on',
   visible: 'off'
 }

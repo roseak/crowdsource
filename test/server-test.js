@@ -43,4 +43,42 @@ describe('Server', function() {
       });
     });
   });
+
+  describe('POST /poll', function() {
+    beforeEach(function() {
+      app.locals.polls = {};
+    });
+
+    it('should return a 200', function(done) {
+      var payload = { poll: fixtures.validPoll };
+
+      this.request.post('/', { form: payload }, function(error, response) {
+        if (error) { done(error); }
+        assert.equal(response.statusCode, 200);
+        done();
+      });
+    });
+
+    it('should store the form data sent', function(done) {
+      var payload = { poll: fixtures.validPoll };
+
+      this.request.post('/', { form: payload }, function(error, response) {
+        if (error) {done(error); }
+        var pollTally = Object.keys(app.locals.polls).length;
+        assert.equal(pollTally, 1, `"Expected 1 poll, found ${pollTally}"`);
+        done();
+      });
+    });
+
+    it('should show admin and poll links', function(done) {
+      var payload = { poll: fixtures.validPoll };
+
+      this.request.post('/', { form: payload }, function(error, response) {
+        if (error) {done(error); }
+        assert(response.body.includes('Admin URL'));
+        assert(response.body.includes('Poll URL'));
+        done();
+      });
+    });
+  });
 });
