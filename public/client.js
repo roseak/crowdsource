@@ -26,7 +26,7 @@ if (endButton) {
 }
 
 socket.on('pollOver' + pollId, function() {
-  pollClosed.innerText = "Poll is now closed!";
+  pollClosed.innerHTML = "<h4>Poll is now closed!</h4>";
 });
 
 socket.on('voteCount' + pollId, function(votes) {
