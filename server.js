@@ -82,6 +82,12 @@ io.on('connection', function(socket) {
       io.sockets.emit('pollOver' + message);
     }
   });
-})
+});
+
+if (!module.parent) {
+  app.listen(app.get('port'), () => {
+    console.log("We're listening...");
+  });
+}
 
 module.exports = app;
