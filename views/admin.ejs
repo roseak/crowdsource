@@ -17,19 +17,14 @@
           <div class="row center">
             <h3><%= poll.question %></h3><br>
             <% if(poll.endTime) { %>
-              <h5>poll will end: <%= poll.endTime %></h5>
+              <h5>poll will end: <%= poll.endTime %></h5><br>
             <% } %>
             <% if( poll.voteTally ) { %>
-              <div id="current-tally">
-                Vote Results:
-                <% for (var vote in poll.voteTally) { %>
-                  <%= vote + ": " + poll.voteTally[vote] + " " %>
-                <% }; %>
-              </div>
+              <% include ./partials/vote-results %>
             <% } else { %>
               <div id="current-tally">There are currently no votes for your survey.  Check back soon!</div>
             <% } %>
-            <div><h5><a href='/poll/<%= poll.id %>'>share your poll with more friends</a></h5></div>
+            <div><h5><a href='/poll/<%= poll.id %>'>share your poll with more friends</a></h5></div><br>
             <% if( poll.status === "on" ) { %>
               <div id="close-poll"><button id="close-button" class="btn indigo">End Poll Now</button></div>
             <% } %>
