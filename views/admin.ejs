@@ -20,7 +20,7 @@
               <h5>poll will end: <%= poll.endTime %></h5>
             <% } %>
             <% if( poll.voteTally ) { %>
-              <div id="tallied">
+              <div id="current-tally">
                 Vote Results:
                 <% for (var vote in poll.voteTally) { %>
                   <%= vote + ": " + poll.voteTally[vote] + " " %>
