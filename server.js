@@ -26,8 +26,9 @@ app.post('/', function(req, res){
   var id = poll.id;
   app.locals.polls[id] = poll;
   poll['votes'] = {};
-  // if (req.body.endTime) {
-  // }
+  if (poll.endTime) {
+    poll.displayTime = moment(poll.endTime).format('MMMM Do YYYY, h:mm:ss a');
+  }
   res.render('link-show', { poll: poll });
 });
 
@@ -58,7 +59,7 @@ io.on('connection', function(socket) {
       if (poll.endTime) {
         var milTime = moment(poll.endTime).format('x');
         var timeDone = milTime - moment().format('x');
-        poll.endTime = moment(poll.endTime).format('MMMM Do YYYY, h:mm:ss a');
+          poll.displayTime = moment(poll.endTime).fromNow();
         setTimeout(function(){
           poll.status = "closed";
           io.sockets.emit('pollOver' + poll.id)
