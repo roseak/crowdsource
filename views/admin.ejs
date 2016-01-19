@@ -6,7 +6,6 @@
     <title>crowdsource</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" type="text/css" href="/normalize.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
   </head>
   <body>
@@ -17,6 +16,9 @@
         <div class="col m8 offset-m2">
           <div class="row center">
             <h3><%= poll.question %></h3><br>
+            <% if(poll.endTime) { %>
+              <h5>poll will end: <%= poll.endTime %></h5>
+            <% } %>
             <% if( poll.voteCount ) { %>
               <div id="current-tally">
                 Vote Results:
@@ -27,6 +29,7 @@
             <% } else { %>
               <div id="no-votes">There are currently no votes for your survey.  Check back soon!</div>
             <% } %>
+            <div><h5><a href='/poll/<%= poll.id %>'>share your poll with more friends</a></h5></div>
             <% if( poll.status === "on" ) { %>
               <div id="close-poll"><button id="close-button" class="btn indigo">End Poll Now</button></div>
             <% } %>
