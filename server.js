@@ -2,10 +2,11 @@ const http = require('http');
 const express = require('express');
 const socketIo = require('socket.io');
 const app = express();
-const crypto = require('crypto');
 const moment = require('moment');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
+const countVotes = require('./lib/count-votes');
+const urlHash = require('./lib/url-hash');
 
 app.locals.polls = {};
 
@@ -50,40 +51,6 @@ const server = http.createServer(app).listen(port, function() {
 
 const io = socketIo(server);
 
-// var polls = {}
-// var votes = {};
-
-var hash_filter = function(hash, test_function) {
-  var filtered, key, keys, i;
-  keys = Object.keys(hash);
-  filtered = {};
-  for (i = 0; i < keys.length; i++) {
-    key = keys[i];
-    if (test_function(hash[key])) {
-      filtered[key] = hash[key];
-    }
-  }
-  return filtered;
-}
-
-function countVotes(poll) {
-  poll.voteTally = {};
-  for (var i = 0; i < poll.responses.length; i++) {
-    poll.voteTally[poll.responses[i].toUpperCase()] = 0;
-  }
-  for (var vote in poll.votes) {
-    poll.voteTally[poll.votes[vote]] += 1;
-  }
-  poll.voteTally = hash_filter(poll.voteTally, function(item){ return !isNaN(item) });
-  return poll.voteTally
-}
-
-function urlHash(poll) {
-  poll.id = crypto.createHash('md5').update(poll.question + Date.now()).digest('hex');
-  poll.adminUrl = crypto.createHash('md5').update(poll.responses[0] + Date.now()).digest('hex');
-  return poll;
-}
-
 io.on('connection', function(socket) {
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast' + message.id) {
@@ -111,13 +78,10 @@ io.on('connection', function(socket) {
     }
 
     if (channel === 'endPoll' + message) {
-      // var poll = polls[message];
       app.locals.polls[message]['status'] = "closed";
-      // poll.status = "closed";
       io.sockets.emit('pollOver' + message);
     }
   });
 })
-
 
 module.exports = app;
