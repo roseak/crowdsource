@@ -116,4 +116,40 @@ describe('Server', function() {
       });
     });
   });
+
+  describe('GET /:adminUrl/:id', function(done) {
+    beforeEach(function() {
+      app.locals.polls.pizza = fixtures.validPoll;
+    });
+
+    it('should return 200', function(done) {
+      this.request.get('/adminPizza/pizza', function(error, response) {
+        if (error) {done(error); }
+        assert.equal(response.statusCode, 200);
+        done();
+      });
+    });
+
+    it('should not display the poll if it is not given the correct admin url', function(done) {
+      var poll = app.locals.polls.pizza;
+
+      this.request.get('adminBurgers/pizza', function(error, response) {
+        if (error) { done(error); }
+        assert(response.body.includes(404), `"${response.body} does not return 404"`);
+        done();
+      });
+    });
+
+    it('should show the poll question', function(done) {
+      var poll = app.locals.polls.pizza;
+
+      this.request.get('/adminPizza/pizza', function(error, response) {
+        if (error) { done(error); }
+        assert(response.body.includes(poll.question), `"${response.body} does not include ${poll.question}"`);
+        done();
+      });
+    });
+
+    
+  });
 });
