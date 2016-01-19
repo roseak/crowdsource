@@ -19,15 +19,15 @@
             <% if(poll.endTime) { %>
               <h5>poll will end: <%= poll.endTime %></h5>
             <% } %>
-            <% if( poll.voteCount ) { %>
-              <div id="current-tally">
+            <% if( poll.voteTally ) { %>
+              <div id="tallied">
                 Vote Results:
-                <% for (var vote in poll.voteCount) { %>
-                  <%= vote + ": " + poll.voteCount[vote] + " " %>
+                <% for (var vote in poll.voteTally) { %>
+                  <%= vote + ": " + poll.voteTally[vote] + " " %>
                 <% }; %>
               </div>
             <% } else { %>
-              <div id="no-votes">There are currently no votes for your survey.  Check back soon!</div>
+              <div id="current-tally">There are currently no votes for your survey.  Check back soon!</div>
             <% } %>
             <div><h5><a href='/poll/<%= poll.id %>'>share your poll with more friends</a></h5></div>
             <% if( poll.status === "on" ) { %>
